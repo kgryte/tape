@@ -1,20 +1,23 @@
-var test = require('../');
+var test = require('blue-tape');
 
-test('first', function (t) {
-  setTimeout(function () {
-    t.ok(1, 'first test');
-    t.end();
-  }, 200);
+var delay = function (mtime) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, mtime);
+  });
+};
 
-  t.test('second', function (t) {
+test('first', async function (t) {
+  await delay(200);
+
+  t.ok(1, 'first test');
+
+  t.test('second', async function (t) {
     t.ok(1, 'second test');
-    t.end();
   });
 });
 
-test('third', function (t) {
-  setTimeout(function () {
-    t.ok(1, 'third test');
-    t.end();
-  }, 100);
+test('third', async function (t) {
+  await delay(100);
+
+  t.ok(1, 'third test');
 });
